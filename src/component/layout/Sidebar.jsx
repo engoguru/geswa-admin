@@ -40,7 +40,7 @@ const menuItems = [
   { name: "Expanses", icon: <AirlineSeatReclineNormalIcon />, to: "/expanse" },
   { name: "Event", icon: <CelebrationIcon />, to: "/event" },
   // { name: "Leave", icon: <TimeToLeaveIcon />, to: "/contact" },
-  // { name: "Salary", icon: <ShoppingBasketIcon />, to: "/salary" },
+  { name: "Member-Ship", icon: <ShoppingBasketIcon />, to: "/member-plan" },
   { name: "Blog", icon: <ShoppingBasketIcon />, to: "/blog" },
 
   // { name: "Settings", icon: <SettingsIcon />, to: "/settings" },

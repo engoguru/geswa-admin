@@ -29,6 +29,8 @@ import State from "./component/pages/coordinator/State";
 import District from "./component/pages/coordinator/District";
 import Taluka from "./component/pages/coordinator/Taluka";
 import Village from "./component/pages/coordinator/Village";
+import MemberPlanMain from "./component/pages/membership/MemberPlanMain";
+import CreateMemberPlan from "./component/pages/membership/CreateMemberPlan";
 
 
 
@@ -77,6 +79,10 @@ function App() {
           <Route path="/district" element={<District/>}/>
           <Route path="/taluka" element={<Taluka/>}/>
           <Route  path="/village" element={<Village/>}/>
+
+          {/* member ship */}
+          <Route path="/member-plan" element={<MemberPlanMain/>}/>
+          <Route path="/member-plan/create" element={<CreateMemberPlan/>}/>
            
 
         </Route>

@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import VerifiedIcon from '@mui/icons-material/Verified';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
-import { Box, Badge, Paper, Typography, Grid, TextField, Avatar, Button, AppBar, Tabs, Tab, } from "@mui/material";
+import { Box, Badge, Paper, Typography, Grid, TextField, Avatar, Button, AppBar, Tabs, Tab, Select, MenuItem } from "@mui/material";
 import EmployeeRegister from "./EmployeeRegister";
 import AssignedRole from "./AssignedRole";
 import { toast } from "react-toastify";
+import AssignHospital from "./AssignHospital";
+import ServiceUsed from "./ServiceUsed";
+import PremiumDetail from "./PremiumDetail";
 
 function UserDetail() {
     const dispatch = useDispatch();
@@ -58,14 +61,19 @@ function UserDetail() {
             console.log(response);
 
             // Optional
-            toast.success(response.message);
+            toast.success(response?.message || "User updated successfully");
             // navigate("/users");
         } catch (error) {
             console.error(error);
 
         }
     };
-
+    const roles = [
+        "MEMBER",
+        "EMPLOYEE",
+        "HOSPITAL",
+        "ADMIN",
+    ];
 
     const handletabChange = (event, newValue) => {
 
@@ -182,7 +190,7 @@ function UserDetail() {
                             />
                         </Grid>
 
-                        <Grid item xs={12} md={6}>
+                        {/*             <Grid item xs={12} md={6}>
                             <TextField
                                 fullWidth
                                 sx={{
@@ -198,7 +206,24 @@ function UserDetail() {
                             />
                         </Grid>
 
-
+*/}
+                        <Grid item xs={12} md={6}>
+                            {/* <FormControl fullWidth size="small" sx={{ py: 1 }}> */}
+                            {/* <InputLabel>Role</InputLabel> */}
+                            <Select
+                                label="Role"
+                                name="role"
+                                value={formData.role}
+                                onChange={handleChange}
+                            >
+                                {roles.map((role) => (
+                                    <MenuItem key={role} value={role}>
+                                        {role}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {/* </FormControl> */}
+                        </Grid>
 
                         <Grid item xs={12} sx={{ py: 1 }}>
                             <Button
@@ -227,11 +252,19 @@ function UserDetail() {
                                 // <Tab key="attendance" label="Attendance" />,
                                 // <Tab key="work" label="Work" />,
                             ]
-                            : role === "Member"
-                                ? [<Tab key="details" label="Details" />]
+                            : role === "MEMBER"
+                                ? [<Tab key="Plan Details" label="Plan Details" />,
+                                <Tab key="Service Detail" label="Service Detail" />
+                                ]
                                 : role === "Admin"
                                     ? [<Tab key="details" label="Details" />]
-                                    : []}
+
+                                    : role === "HOSPITAL"
+                                        ? [<Tab key="Assign Hospital" label="Assign Hospital" />]
+
+
+                                        : []}
+
                     </Tabs>
                 </Paper>
             </Box>
@@ -246,15 +279,22 @@ function UserDetail() {
                     </>
                 )}
 
-                {role === "Member" && (
+                {role === "MEMBER" && (
                     <>
-                        {tab === 0 && <MemberRegister />}
+                        {tab === 0 && <PremiumDetail userId={id} />}
+                        {tab === 1 && <ServiceUsed userId={id}/>}
                     </>
                 )}
 
                 {role === "ADMIN" && (
                     <>
                         {tab === 0 && <EmployeeRegister userId={id} />}
+                    </>
+                )}
+
+                {role === "HOSPITAL" && (
+                    <>
+                        {tab === 0 && <AssignHospital userId={id} />}
                     </>
                 )}
             </Box>
